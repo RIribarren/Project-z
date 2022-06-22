@@ -1,0 +1,44 @@
+{
+  "name": "project-z",
+  "version": "1.0.0",
+  "description": "api experimental pedagogica",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "start": "node index.js",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir build --extensions \".ts\" --source-maps inline"
+  },
+  "repository": "git+https://github.com/RIribarren/Project-z.git",
+  "keywords": [
+    "api",
+    "nodejs",
+    "typescript",
+    "express",
+    "postgreSQL",
+    "mongoDB"
+  ],
+  "author": "Alan Díaz, Francisco Zapiola, Delfina Fenocchio, Lisbaldy de Jesús, Matias Autalan, Rodolfo Iribarren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RIribarren/Project-z/issues"
+  },
+  "homepage": "https://github.com/RIribarren/Project-z#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/node": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.7.4"
+  }
+}
