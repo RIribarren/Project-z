@@ -1,25 +1,21 @@
 
 import { faker } from '@faker-js/faker';
-
+import pool from '@libs/postgres';
 class User {
-  private name: string;
-  private lastName: string;
-  private id: string;
-  private users: Array<Object>
   constructor(name: string, lastName: string) {
-    this.name = name;
-    this.lastName = lastName;
-    this.id = faker.datatype.uuid();
-    this.users = []
-    this.generate()
+    this.pool = pool
   }
 
   public findById(id: string) {
-    return this.users.find(item => item.id === id)
+    //return this.users.find(item => item.id === id)
   }
 
-  public findAll() {
-    return this.users;
+  public async findAll() {
+    //return this.users;
+    const query = "SELECT * FROM users";
+    const result = await this.pool.query(query)
+    console.log(result)
+    return result.rows
   }
 
   public createUser() {
@@ -32,12 +28,6 @@ class User {
 
   public deleteUser() {
 
-  }
-
-  generate() {
-    for(let i = 0; i<50; i++) {
-      this.users.push({ name: faker.name.firstName(), lastName: faker.name.lastName(), id: faker.datatype.uuid() })
-    }
   }
 }
 
