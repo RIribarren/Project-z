@@ -12,9 +12,9 @@ class User {
 
   public async findAll() {
     //return this.users;
-    const query = "SELECT * FROM users";
+    const query = `SELECT * FROM "user"`;
     const result = await this.pool.query(query)
-    console.log(result)
+    console.log(result.rows)
     return result.rows
   }
 

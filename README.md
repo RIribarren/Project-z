@@ -36,7 +36,6 @@ Features FE:
 
 Charlas pendientes:
 
-- Charla de CORS
 - Charla de SQL
 - Charla de autenticación
 - Charla de websockets
