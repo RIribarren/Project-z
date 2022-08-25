@@ -8,8 +8,19 @@ router.get('/', (req, res) => {
   
 })
 
-router.post('/', (req, res) => {
-  res.send('Usuario creado');
+router.post('/', async (req, res) => {
+  try {
+    const {first_name, last_name, email, password, role} = req.body;
+    const user = await Users.createUser(first_name, last_name, email, password, role);
+    res.json({
+      message: 'Usuario creado',
+      data: user
+    })
+  }
+  catch(error){
+    console.error(error)
+    res.status(500).send('Algo salio mal, no se pudo crear el usuario')
+  }
 })
 
 router.get('/:id', (req, res) => {
