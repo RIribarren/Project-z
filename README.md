@@ -1,8 +1,23 @@
 # Project-z
+# Introducción - Capacitación NodeJS
+Este proyecto es parte de una capacitación que se lleva a cabo dentro de Nubi. La misma estará compuesta por el dictado de varias charlas explicativas, y el desarrollo de un **sistema para facilitar el proceso de refinamiento** de equipos que trabajen con Scrum como metodología ágil.
 
-Realizar una API que sirva
+La siguiente capacitación tiene como objetivo adquirir habilidad de código en **NodeJS** para poder desarrollar soluciones o implementaciones con módulos que correrán en un servidor (backend), así como mantenimiento de los mismos.
 
-Features BE:
+### Charlas dictadas
+- Setup inicial de un proyecto en Node
+- Buffers y Streams
+- Scripts con Node
+- MongoDB
+- PostgreSQL con Node + pgAdmin
+- CORS
+- SQL
+
+---
+En este proyecto vamos a poner en práctica las tecnologías y conceptos aprendidos, desarrollando las siguientes features:
+
+
+## Features de la API:
 
 - Registro.
 - Login.
@@ -20,30 +35,12 @@ Features BE:
 - Recolectar data que ayude a encontrar cierta info basado en palabras claves utilizando la tecnica de web scraping.
 - Generar reportes estadísiticos basados en los criterios requeridos llegado el momento.
 - Cada cliente que entre en una sesión ya iniciada se actualice automaticamente el estado actual de la sesion (uso de redis con websockets).
+- Implementar algún servicio menor haciendo uso de GraphQL
 
-Features FE:
-
-- Carrera de patos.
+## Features front-end:
 - Cambios en tiempo real (modificación de votos, etc).
 - Identificación visual de la categoria del usuario (Dev, QA, etc).
 - Conteo de votos detallado (cantidad de votos por valoración).
-
+- Carrera de patos.
 - A futuro integrar features para facilitar las reuniones de acuerdos de desarrollo.
-
-- TODO a largo plazo:
-  - Implementar algún servicio menor con GraphQL
-  - Mandar cierta data para Analitycs con beacon api
-
-Charlas pendientes:
-
-- Charla de CORS
-- Charla de SQL
-- Charla de autenticación
-- Charla de websockets
-- Charla de redis
-
-Proximos pasos:
-
-- Armar el script para inicializar el modelo (armar las tablas con los diferentes datos y cargar las tablas)
-- Encriptar las contraseñas en la tabla de user
-- Configurar y comenzar a utilizar Sequelize
+- Mandar cierta data para Analitycs con beacon api
