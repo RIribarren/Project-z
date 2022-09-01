@@ -3,9 +3,13 @@ import UserService from '@services/users';
 const router = express.Router()
 const Users = new UserService()
 
-router.get('/', (req, res) => {
-  res.json(Users.findAll())
-  
+router.get('/', async (req, res) => {
+  try{
+    const response = await Users.findAll();
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+  }
 })
 
 router.post('/', async (req, res) => {
