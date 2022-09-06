@@ -7,8 +7,11 @@ class User {
     this.pool = pool
   }
 
-  public findById(id: string) {
-    //return this.users.find(item => item.id === id)
+  public async findById(id: string) {
+    const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
+    const values = [id]
+    const result = await this.pool.query(query, values);
+    return result.rows[0];
   }
 
   public async findByEmail(email: string) {

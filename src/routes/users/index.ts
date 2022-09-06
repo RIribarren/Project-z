@@ -27,8 +27,9 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/:id', (req, res) => {
-  res.json(Users.findById(req.params.id))
+router.get('/:id', async (req, res) => {
+  const user = await Users.findById(req.params.id)
+  res.json(user)
 })
 
 export default router;
