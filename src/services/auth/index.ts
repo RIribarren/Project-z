@@ -13,12 +13,11 @@ class Auth {
   public async login(email: string, pass: string) {
     const user = await Users.findByEmail(email);
     if (!user) {
-      throw new Error('user does not exists');
+      throw new Error('Invalid credentials');
     }
     const isMatch = await DataHash.verify(user.password, pass);
-    console.log('isMatch', isMatch);
     if (!isMatch) {
-      throw new Error('credentials does not exists');
+      throw new Error('Invalid credentials');
     }
     const {password, ...response} = user;
     return response;
