@@ -15,7 +15,7 @@ class User {
   }
 
   public async findByEmail(email: string) {
-    const query = 'SELECT first_name, last_name, password, email, role FROM "user" WHERE email = $1';
+    const query = 'SELECT first_name, last_name, password, email, role, id FROM "user" WHERE email = $1';
     const values = [email]
     const result = await this.pool.query(query, values);
     return result.rows[0];
