@@ -3,7 +3,7 @@ import CardsRouter from './cards';
 import SessionVotingRouter from './sessionVoting';
 import AuthRouter from './auth';
 
-const RouterApp = (app) => {
+const RouterApp = (app: any) => {
   app.use('/users', UserRouter);
   app.use('/cards', CardsRouter);
   app.use('/sessionVoting', SessionVotingRouter);

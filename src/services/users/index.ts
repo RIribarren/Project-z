@@ -1,10 +1,12 @@
-import pool from '@libs/postgres';
-import { Pool} from '@types/pg'
-import DataHash from '@helpers/utils/dataHash';
+import { postgresPool } from '@libs';
+import { Pool } from 'pg'
+import { DataHash } from '@helpers';
+
 class User {
   pool: Pool
-  constructor(name: string, lastName: string) {
-    this.pool = pool
+  
+  constructor() {
+    this.pool = postgresPool
   }
 
   public async findById(id: string) {

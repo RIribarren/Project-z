@@ -1,14 +1,15 @@
-import pool from '@libs/postgres';
-import { Pool} from '@types/pg'
-import UserService from '@services/users';
-import DataHash from '@helpers/utils/dataHash';
+import { postgresPool } from '@libs';
+import { Pool } from 'pg'
+import { UserService } from '@services';
+import { DataHash } from '@helpers';
 import jwt from 'jsonwebtoken'
+
 const Users = new UserService()
 
 class Auth {
   pool: Pool
   constructor() {
-      this.pool = pool
+      this.pool = postgresPool
   }
 
   public async login(email: string, pass: string) {
@@ -35,7 +36,7 @@ class Auth {
   public signAccessToken(payload: object) {
     var token = jwt.sign(
       payload, 
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET ?? '',
       {
         expiresIn: '2d',
       }
