@@ -1,15 +1,15 @@
 import { postgresPool } from '@libs';
-import { Pool } from 'pg'
-import { UserService } from '@services';
+import { Pool } from 'pg';
+import UserService from '../users';
 import { DataHash } from '@helpers';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-const Users = new UserService()
+const Users = new UserService();
 
 class Auth {
-  pool: Pool
+  pool: Pool;
   constructor() {
-      this.pool = postgresPool
+    this.pool = postgresPool;
   }
 
   public async login(email: string, pass: string) {
@@ -26,21 +26,17 @@ class Auth {
     const accessToken = this.signAccessToken({ user_id: user.id });
 
     await this.saveAccessTokenToDB(accessToken, user.id);
-    
-    return { 
+
+    return {
       ...response,
-      accessToken
+      accessToken,
     };
   }
 
   public signAccessToken(payload: object) {
-    var token = jwt.sign(
-      payload, 
-      process.env.JWT_SECRET ?? '',
-      {
-        expiresIn: '2d',
-      }
-    );
+    var token = jwt.sign(payload, process.env.JWT_SECRET ?? '', {
+      expiresIn: '2d',
+    });
     return token;
   }
 
@@ -49,12 +45,12 @@ class Auth {
     const query = `INSERT INTO "accessToken" (
       token,
       user_id
-    ) VALUES ($1, $2)`
+    ) VALUES ($1, $2)`;
 
     const values = [token, user_id];
 
-    await this.pool.query(query,values);
+    await this.pool.query(query, values);
   }
 }
 
-export default Auth
+export default Auth;
