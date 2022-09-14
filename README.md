@@ -1,10 +1,13 @@
 # Project-z
+
 # Introducción - Capacitación NodeJS
+
 Este proyecto es parte de una capacitación que se lleva a cabo dentro de Nubi. La misma estará compuesta por el dictado de varias charlas explicativas, y el desarrollo de un **sistema para facilitar el proceso de refinamiento** de equipos que trabajen con Scrum como metodología ágil.
 
 La siguiente capacitación tiene como objetivo adquirir habilidad de código en **NodeJS** para poder desarrollar soluciones o implementaciones con módulos que correrán en un servidor (backend), así como mantenimiento de los mismos.
 
 ### Charlas dictadas
+
 - Setup inicial de un proyecto en Node
 - Buffers y Streams
 - Scripts con Node
@@ -14,8 +17,8 @@ La siguiente capacitación tiene como objetivo adquirir habilidad de código en 
 - SQL
 
 ---
-En este proyecto vamos a poner en práctica las tecnologías y conceptos aprendidos, desarrollando las siguientes features:
 
+En este proyecto vamos a poner en práctica las tecnologías y conceptos aprendidos, desarrollando las siguientes features:
 
 ## Features de la API:
 
@@ -38,6 +41,7 @@ En este proyecto vamos a poner en práctica las tecnologías y conceptos aprendi
 - Implementar algún servicio menor haciendo uso de GraphQL
 
 ## Features front-end:
+
 - Cambios en tiempo real (modificación de votos, etc).
 - Identificación visual de la categoria del usuario (Dev, QA, etc).
 - Conteo de votos detallado (cantidad de votos por valoración).

@@ -8,6 +8,6 @@ const RouterApp = (app: any) => {
   app.use('/cards', CardsRouter);
   app.use('/sessionVoting', SessionVotingRouter);
   app.use('/auth', AuthRouter);
-}
+};
 
-export default RouterApp
+export default RouterApp;

@@ -1,54 +1,57 @@
 import { postgresPool } from '@libs';
-import { Pool } from 'pg'
+import { Pool } from 'pg';
 import { DataHash } from '@helpers';
 
 class User {
-  pool: Pool
-  
+  pool: Pool;
+
   constructor() {
-    this.pool = postgresPool
+    this.pool = postgresPool;
   }
 
   public async findById(id: string) {
     const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
-    const values = [id]
+    const values = [id];
     const result = await this.pool.query(query, values);
     return result.rows[0];
   }
 
   public async findByEmail(email: string) {
-    const query = 'SELECT first_name, last_name, password, email, role, id FROM "user" WHERE email = $1';
-    const values = [email]
+    const query =
+      'SELECT first_name, last_name, password, email, role, id FROM "user" WHERE email = $1';
+    const values = [email];
     const result = await this.pool.query(query, values);
     return result.rows[0];
   }
-  
+
   public async findAll() {
     const query = 'SELECT first_name, last_name, email, role FROM "user"';
-    const result = await this.pool.query(query)
-    return result.rows
+    const result = await this.pool.query(query);
+    return result.rows;
   }
 
-  public async createUser(first_name: string, last_name: string, email: string, password: string, role: string) {
+  public async createUser(
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string,
+    role: string
+  ) {
     const hashedPass = await DataHash.hash(password);
-    const values = [first_name, last_name, email, hashedPass, role]
+    const values = [first_name, last_name, email, hashedPass, role];
     const query = `INSERT INTO "user" (
       first_name,
       last_name,
       email,
       password,
       role
-    ) VALUES ($1, $2, $3, $4, $5)`
-    await this.pool.query(query,values)
+    ) VALUES ($1, $2, $3, $4, $5)`;
+    await this.pool.query(query, values);
   }
 
-  public updateUser() {
+  public updateUser() {}
 
-  }
-
-  public deleteUser() {
-
-  }
+  public deleteUser() {}
 }
 
-export default User
+export default User;
