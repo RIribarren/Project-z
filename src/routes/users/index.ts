@@ -3,16 +3,16 @@ import { UserService } from '@services';
 const router = express.Router();
 const Users = new UserService();
 
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res, next) => {
   try {
     const response = await Users.findAll();
     res.json(response);
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const { first_name, last_name, email, password, role } = req.body;
     const user = await Users.createUser(first_name, last_name, email, password, role);
@@ -21,14 +21,17 @@ router.post('/', async (req, res) => {
       data: user,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Algo salio mal, no se pudo crear el usuario');
+    next(error);
   }
 });
 
-router.get('/:id', async (req, res) => {
-  const user = await Users.findById(req.params.id);
-  res.json(user);
+router.get('/:id', async (req, res, next) => {
+  try {
+    const user = await Users.findById(req.params.id);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;

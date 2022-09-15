@@ -1,4 +1,5 @@
 import { postgresPool } from '@libs';
+import Boom from '@hapi/boom';
 import { Pool } from 'pg';
 import { DataHash } from '@helpers';
 
@@ -10,10 +11,17 @@ class User {
   }
 
   public async findById(id: string) {
-    const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
-    const values = [id];
-    const result = await this.pool.query(query, values);
-    return result.rows[0];
+    try {
+      const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
+      const values = [id];
+      const result = await this.pool.query(query, values);
+      if (result.rows.length < 1) {
+        Boom.notFound('User not found!');
+      }
+      return result.rows[0];
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async findByEmail(email: string) {
