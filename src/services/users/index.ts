@@ -16,7 +16,7 @@ class User {
       const values = [id];
       const result = await this.pool.query(query, values);
       if (result.rows.length < 1) {
-        Boom.notFound('User not found!');
+        throw Boom.notFound('User not found!');
       }
       return result.rows[0];
     } catch (error) {
@@ -25,17 +25,28 @@ class User {
   }
 
   public async findByEmail(email: string) {
-    const query =
+    try {
+      const query =
       'SELECT first_name, last_name, password, email, role, id FROM "user" WHERE email = $1';
     const values = [email];
     const result = await this.pool.query(query, values);
+    if(result.rows.length<1){
+      throw Boom.notFound('Email not found!')
+    }
     return result.rows[0];
+    } catch (error) {
+      throw error
+    }
   }
 
   public async findAll() {
+    try {
     const query = 'SELECT first_name, last_name, email, role FROM "user"';
     const result = await this.pool.query(query);
     return result.rows;
+    } catch (error) {
+      throw error
+    }
   }
 
   public async createUser(
@@ -45,16 +56,36 @@ class User {
     password: string,
     role: string
   ) {
-    const hashedPass = await DataHash.hash(password);
-    const values = [first_name, last_name, email, hashedPass, role];
-    const query = `INSERT INTO "user" (
-      first_name,
-      last_name,
-      email,
-      password,
-      role
-    ) VALUES ($1, $2, $3, $4, $5)`;
-    await this.pool.query(query, values);
+    try {
+      if(!first_name){
+        throw Boom.badRequest("missing first_name field")
+      }
+      if(!last_name){
+        throw Boom.badRequest("missing last_name field")
+      }
+      if(!email){
+        throw Boom.badRequest("missing email field")
+      }
+      if(!password){
+        throw Boom.badRequest("missing password field")
+      }
+      if(!role){    
+        throw Boom.badRequest("missing role field")
+      }
+      const hashedPass = await DataHash.hash(password);
+      const values = [first_name, last_name, email, hashedPass, role];
+      const query = `INSERT INTO "user" (
+        first_name,
+        last_name,
+        email,
+        password,
+        role
+      ) VALUES ($1, $2, $3, $4, $5)`;
+      await this.pool.query(query, values);
+    } catch (error) {
+      throw error
+    }
+  
   }
 
   public updateUser() {}

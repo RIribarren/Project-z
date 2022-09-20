@@ -8,7 +8,7 @@ export function errorLogger(error: any, _req: Request, _res: Response, next: Nex
 export function boomErrorHandler(error: any, _req: Request, res: Response, next: NextFunction) {
   if (error.isBoom) {
     const { output } = error;
-    res.status(output.statusCode).json(output.payload);
+    return res.status(output.statusCode).json(output.payload);
   }
   next(error);
 }
