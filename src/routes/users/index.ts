@@ -1,15 +1,18 @@
 import express from 'express';
+import passport from 'passport';
 import { UserService } from '@services';
 const router = express.Router();
 const Users = new UserService();
 
-router.get('/', async (_req, res, next) => {
-  try {
-    const response = await Users.findAll();
-    res.json(response);
-  } catch (error) {
-    next(error);
-  }
+router.get('/', 
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const response = await Users.findAll();
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
 });
 
 router.post('/', async (req, res, next) => {

@@ -1,11 +1,15 @@
 import express from 'express';
 import routerApi from '@routes';
 import { errorLogger, boomErrorHandler, genericErrorHandler } from '@middlewares';
+import activatePassportStrategies from '../src/helpers/auth/index'
+
 
 const app = express();
 const port = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+activatePassportStrategies();
 
 routerApi(app);
 app.use(errorLogger);

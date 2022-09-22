@@ -10,7 +10,8 @@
           "@services": "./src/services",
           "@libs": "./src/libs",
           "@helpers": "./src/helpers",
-          "@middlewares": "./src/middlewares"
+          "@middlewares": "./src/middlewares",
+          "@config": "./src/config"
         }
       }
     ]

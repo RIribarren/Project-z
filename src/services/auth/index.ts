@@ -23,7 +23,7 @@ class Auth {
     }
     const { password, ...response } = user;
 
-    const accessToken = this.signAccessToken({ user_id: user.id });
+    const accessToken = this.signAccessToken({ user_id: user.id }, '2d');
 
     await this.saveAccessTokenToDB(accessToken, user.id);
 
@@ -33,16 +33,16 @@ class Auth {
     };
   }
 
-  public signAccessToken(payload: object) {
+  public signAccessToken(payload: object, expiresIn: string | number) {
     var token = jwt.sign(payload, process.env.JWT_SECRET ?? '', {
-      expiresIn: '2d',
+      expiresIn,
     });
     return token;
   }
 
   //TODO: Add logic for not accumulating expired tokens. Maybe delete old ones, or overwrite when creating new one?
   public async saveAccessTokenToDB(token: string, user_id: number) {
-    const query = `INSERT INTO "accessToken" (
+    const query = `INSERT INTO "accesstoken" (
       token,
       user_id
     ) VALUES ($1, $2)`;
@@ -50,6 +50,12 @@ class Auth {
     const values = [token, user_id];
 
     await this.pool.query(query, values);
+  }
+
+  public async verifyJwt(token: string) {
+
+    const query = `SELECT * from "accesstoken" where `
+  
   }
 }
 
