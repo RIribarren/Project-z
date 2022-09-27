@@ -42,7 +42,7 @@ class Auth {
 
   //TODO: Add logic for not accumulating expired tokens. Maybe delete old ones, or overwrite when creating new one?
   public async saveAccessTokenToDB(token: string, user_id: number) {
-    const query = `INSERT INTO "accesstoken" (
+    const query = `INSERT INTO "accessToken" (
       token,
       user_id
     ) VALUES ($1, $2)`;
@@ -53,7 +53,7 @@ class Auth {
   }
 
   public async verifyJwt(token: string) {
-    const query = `SELECT * from "accesstoken" where `;
+    const query = `SELECT * from "accessToken" where `;
   }
 }
 
