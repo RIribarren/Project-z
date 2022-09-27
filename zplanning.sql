@@ -18,6 +18,10 @@ CREATE SEQUENCE team_id_seq
 INCREMENT 1
 START 1;
 
+CREATE SEQUENCE accessToken_id_seq
+INCREMENT 1
+START 1;
+
 CREATE TABLE IF NOT EXISTS public."user"
 (
     id integer NOT NULL DEFAULT nextval('user_id_seq'),
@@ -27,6 +31,14 @@ CREATE TABLE IF NOT EXISTS public."user"
     password text NOT NULL,
     role text NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public."accessToken"
+(
+    id integer NOT NULL DEFAULT nextval('accessToken_id_seq'::regclass),
+    token text NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT accesstoken_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public."voteSession"
@@ -60,6 +72,13 @@ CREATE TABLE IF NOT EXISTS public."user_voteSession"
     vote_session_id integer NOT NULL,
     PRIMARY KEY (user_id, vote_session_id)
 );
+
+ALTER TABLE IF EXISTS public."accessToken"
+    ADD CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
+    REFERENCES public."user" (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
 
 CREATE TABLE IF NOT EXISTS public."card_voteSession"
 (
