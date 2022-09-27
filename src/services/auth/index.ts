@@ -53,9 +53,7 @@ class Auth {
   }
 
   public async verifyJwt(token: string) {
-
-    const query = `SELECT * from "accesstoken" where `
-  
+    const query = `SELECT * from "accesstoken" where `;
   }
 }
 

@@ -1,8 +1,6 @@
-import passport from "passport";
+import passport from 'passport';
 import jwtStrategy from './jwtStrategy';
 
-const activatePassportStrategies = () => { 
+export const activatePassportStrategies = () => {
   passport.use(jwtStrategy);
-}
-
-export default activatePassportStrategies;
+};

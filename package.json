@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "start": "node build/index.js",
-    "build": "npm run build:types && npm run build:js",
+    "build": "rm -rf build && npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir build --extensions \".ts\" --source-maps inline"
   },
@@ -18,7 +18,7 @@
     "typescript",
     "express",
     "postgreSQL",
-    "mongoDB"
+    "redis"
   ],
   "author": "Alan Díaz, Francisco Zapiola, Delfina Fenocchio, Lisbaldy de Jesús, Matias Autalan, Rodolfo Iribarren",
   "license": "MIT",
