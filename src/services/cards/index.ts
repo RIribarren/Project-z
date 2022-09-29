@@ -20,7 +20,7 @@ const findCardById = async (id: string) => {
     const values = [id];
     const result = await pool.query(query, values);
     if (result.rows.length < 1) {
-      throw Boom.notFound('User not found!');
+      throw Boom.notFound('Card not found!');
     }
     return result.rows[0];
   } catch (error) {
@@ -44,6 +44,26 @@ const createCard = async (title: string, link: string) => {
   }
 };
 
-const updateCard = async (title?: string, link?: string) => {};
+const updateCard = async (id: string, title?: string, link?: string) => {
+  try {
+    if (title || link ) {
+      const values = [id, title, link];
+      const query = `UPDATE "card" SET ${title? 'title = $2':''}${title && link? ' link = $3': link? ' link = $2' :''} WHERE id=$1`
+    } else {
+      throw Boom.badRequest('missing fields');
+    }
+  }
+  catch (error) {
+    throw error;
+  }
+};
 
-const removeCard = async (id: string) => {};
+const removeCard = async (id: string) => {
+  try {
+    const values = [id]
+    const query = `DELETE FROM "card" WHERE id=$1`
+  }
+  catch (error) {
+    throw error;
+  }
+};
