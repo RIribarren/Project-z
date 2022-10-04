@@ -5,7 +5,9 @@ import { findAllCards, findCardById, createCard, updateCard, removeCard } from '
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.use(passport.authenticate('jwt', { session: false }));
+
+router.get('/', async (req, res, next) => {
   try {
     const response = await findAllCards();
     res.json(response);
@@ -14,7 +16,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   }
 });
 
-router.post('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const { title, link } = req.body;
     await createCard(title, link);
