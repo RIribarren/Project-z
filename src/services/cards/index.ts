@@ -4,9 +4,9 @@ import { Pool } from 'pg';
 
 const pool: Pool = postgresPool;
 
-const findAllCards = async () => {
+export const findAllCards = async () => {
   try {
-    const query = 'SELECT title, link FROM "card"';
+    const query = 'SELECT title, link, id FROM "card"';
     const result = await pool.query(query);
     return result.rows;
   } catch (error) {
@@ -14,7 +14,7 @@ const findAllCards = async () => {
   }
 };
 
-const findCardById = async (id: string) => {
+export const findCardById = async (id: string) => {
   try {
     const query = 'SELECT title, link FROM "card" WHERE id = $1';
     const values = [id];
@@ -28,7 +28,7 @@ const findCardById = async (id: string) => {
   }
 };
 
-const createCard = async (title: string, link: string) => {
+export const createCard = async (title: string, link: string) => {
   try {
     if (!title) {
       throw Boom.badRequest('missing title field');
@@ -37,33 +37,40 @@ const createCard = async (title: string, link: string) => {
       throw Boom.badRequest('missing link field');
     }
     const values = [title, link];
-    const query = `INSERT INTO "cards" (title, link) VALUES ($1, $2)`;
+    const query = `INSERT INTO "card" (title, link) VALUES ($1, $2)`;
     await pool.query(query, values);
   } catch (error) {
     throw error;
   }
 };
 
-const updateCard = async (id: string, title?: string, link?: string) => {
+export const updateCard = async (id: string, title?: string, link?: string) => {
   try {
-    if (title || link ) {
-      const values = [id, title, link];
-      const query = `UPDATE "card" SET ${title? 'title = $2':''}${title && link? ' link = $3': link? ' link = $2' :''} WHERE id=$1`
+    const values = [id];
+    if (title) values.push(title);
+    if (link) values.push(link);
+
+    if (title || link) {
+      // Find a more readable alternative to this approach
+      const query = `UPDATE "card" SET ${title ? 'title = $2' : ''}${
+        title && link ? ', link = $3' : link ? ' link = $2' : ''
+      } WHERE id=$1`;
+
+      await pool.query(query, values);
     } else {
       throw Boom.badRequest('missing fields');
     }
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };
 
-const removeCard = async (id: string) => {
+export const removeCard = async (id: string) => {
   try {
-    const values = [id]
-    const query = `DELETE FROM "card" WHERE id=$1`
-  }
-  catch (error) {
+    const values = [id];
+    const query = `DELETE FROM "card" WHERE id=$1`;
+    await pool.query(query, values);
+  } catch (error) {
     throw error;
   }
 };
