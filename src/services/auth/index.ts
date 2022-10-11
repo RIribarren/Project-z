@@ -1,8 +1,9 @@
 import { postgresPool } from '@libs';
 import { Pool } from 'pg';
+import jwt from 'jsonwebtoken';
+import Boom from '@hapi/boom';
 import UserService from '../users';
 import { DataHash } from '@helpers';
-import jwt from 'jsonwebtoken';
 
 const Users = new UserService();
 
@@ -66,7 +67,6 @@ class Auth {
 
     const values = [user_id, access_token, refresh_token];
 
-    console.log('UP`DEATEANDOO!!ASDÑLFKASDJÑFL');
 
     await this.pool.query(query, values);
   }
@@ -77,12 +77,23 @@ class Auth {
     const values = [user_id];
 
     const result = await this.pool.query(query, values);
-    console.log('result.rows ', result.rows);
     return Boolean(result.rows.length);
   }
 
-  public async verifyJwt(token: string) {
-    const query = `SELECT * from "authToken" where `;
+  public async refreshJWT(user_id: number, refresh_token: string ) {
+    const query = `SELECT * FROM "authToken" WHERE id = $1`;
+    const values = [user_id];
+    const result = await this.pool.query(query, values);
+    if (Boolean(result.rows.length)) {
+      const item = result.rows[0]
+      if (item.refresh_token === refresh_token) {
+        const accessToken = this.signJWT({ user_id }, ACCESS_TOKEN_EXPIRATION);
+        const refreshToken = this.signJWT({ user_id }, REFRESH_TOKEN_EXPIRATION);
+        await this.updateJWTByUserId(accessToken, refreshToken, user_id);
+        return { accessToken, refreshToken };
+      }
+    }
+    throw Boom.unauthorized('Refresh token not valid');
   }
 }
 

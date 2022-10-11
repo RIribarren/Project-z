@@ -1,8 +1,18 @@
 import express from 'express';
+import passport from 'passport';
+import Boom from '@hapi/boom';
 import { AuthService } from '@services';
 
 const router = express.Router();
 const Auth = new AuthService();
+
+declare global {
+  namespace Express {
+    interface User {
+      user_id: number;
+    }
+  }
+}
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -13,5 +23,20 @@ router.post('/login', async (req, res, next) => {
     next(error);
   }
 });
+
+router.post('/refresh-token', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const user_id = req?.user?.user_id;
+    if (!user_id) {
+      throw Boom.unauthorized('Access token not valid');
+    } else {
+      const { refresh_token } = req.body;
+      const response = await Auth.refreshJWT(user_id, refresh_token);
+      res.json(response);
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 export default router;
