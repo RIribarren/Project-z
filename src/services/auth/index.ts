@@ -3,12 +3,14 @@ import { Pool } from 'pg';
 import jwt from 'jsonwebtoken';
 import Boom from '@hapi/boom';
 import UserService from '../users';
-import { DataHash } from '@helpers';
+import { DataHash, SendMail } from '@helpers';
+import { envVarConfig } from '@config';
 
 const Users = new UserService();
 
 const ACCESS_TOKEN_EXPIRATION = '1m';
 const REFRESH_TOKEN_EXPIRATION = '2m';
+const RECOVER_TOKEN_EXPIRATION = '30m';
 
 class Auth {
   pool: Pool;
@@ -67,7 +69,6 @@ class Auth {
 
     const values = [user_id, access_token, refresh_token];
 
-
     await this.pool.query(query, values);
   }
 
@@ -80,12 +81,12 @@ class Auth {
     return Boolean(result.rows.length);
   }
 
-  public async refreshJWT(user_id: number, refresh_token: string ) {
+  public async refreshJWT(user_id: number, refresh_token: string) {
     const query = `SELECT * FROM "authToken" WHERE id = $1`;
     const values = [user_id];
     const result = await this.pool.query(query, values);
     if (Boolean(result.rows.length)) {
-      const item = result.rows[0]
+      const item = result.rows[0];
       if (item.refresh_token === refresh_token) {
         const accessToken = this.signJWT({ user_id }, ACCESS_TOKEN_EXPIRATION);
         const refreshToken = this.signJWT({ user_id }, REFRESH_TOKEN_EXPIRATION);
@@ -94,6 +95,18 @@ class Auth {
       }
     }
     throw Boom.unauthorized('Refresh token not valid');
+  }
+
+  public async recoverPassword(email: string) {
+    try {
+      const user = await Users.findByEmail(email);
+      const token = this.signJWT({ user_id: user.id }, RECOVER_TOKEN_EXPIRATION);
+      if (user) {
+        SendMail(envVarConfig.email_user, email, 'Cambiá tu contraseña', token, `<p>${token}</p>`);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
