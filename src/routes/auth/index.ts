@@ -45,12 +45,11 @@ router.post(
 
 // TODO
 // - Loguear los casos de error, por más que no se los informemos al usuario
-// - Probar que llegue el email con el token
 
 router.post('/password/recover', async (req, res, next) => {
   try {
     const { email } = req.body;
-    await Auth.recoverPassword(email);
+    await Auth.requestPasswordRecovery(email);
   } catch (error) {
     console.error(error);
   } finally {
