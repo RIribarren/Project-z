@@ -12,6 +12,10 @@ const ACCESS_TOKEN_EXPIRATION = '1m';
 const REFRESH_TOKEN_EXPIRATION = '2m';
 const RECOVER_TOKEN_EXPIRATION = '30m';
 
+interface JwtPayload {
+  user_id: string;
+}
+
 class Auth {
   pool: Pool;
   constructor() {
@@ -64,9 +68,12 @@ class Auth {
     await this.pool.query(query, values);
   }
 
-  //TODO: revisar el WHERE
-  public async updateAuthTokenByUserId(access_token: string, refresh_token: string, user_id: number) {
-    const query = `UPDATE "authToken" SET access_token = $2, refresh_token = $3 WHERE id = $1`;
+  public async updateAuthTokenByUserId(
+    access_token: string,
+    refresh_token: string,
+    user_id: number
+  ) {
+    const query = `UPDATE "authToken" SET access_token = $2, refresh_token = $3 WHERE user_id = $1`;
 
     const values = [user_id, access_token, refresh_token];
 
@@ -82,9 +89,8 @@ class Auth {
     return Boolean(result.rows.length);
   }
 
-  //TODO: Revisar el where de la query
   public async checkAuthTokenByUserId(user_id: number) {
-    const query = `SELECT * FROM "authToken" WHERE id = $1`;
+    const query = `SELECT * FROM "authToken" WHERE user_id = $1`;
 
     const values = [user_id];
 
@@ -93,7 +99,7 @@ class Auth {
   }
 
   public async refreshJWT(user_id: number, refresh_token: string) {
-    const query = `SELECT * FROM "authToken" WHERE id = $1`;
+    const query = `SELECT * FROM "authToken" WHERE user_id = $1`;
     const values = [user_id];
     const result = await this.pool.query(query, values);
     if (Boolean(result.rows.length)) {
@@ -111,29 +117,78 @@ class Auth {
   public async requestPasswordRecovery(email: string) {
     try {
       const user = await Users.findByEmail(email);
-      const token = this.signJWT({ user_id: user.id }, RECOVER_TOKEN_EXPIRATION);
+      const recoveryToken = this.signJWT({ user_id: user.id }, RECOVER_TOKEN_EXPIRATION);
       if (await this.checkAuxTokenByUserId(user.id, 'recoveryToken')) {
-        await this.updateAuxTokenByUserId(token, 'recoveryToken', user.id);
+        await this.updateAuxTokenByUserId(recoveryToken, 'recoveryToken', user.id);
       } else {
-        await this.saveAuxTokenToDB(token, 'recoveryToken', user.id);
+        await this.saveAuxTokenToDB(recoveryToken, 'recoveryToken', user.id);
       }
       if (user) {
-        SendMail(envVarConfig.email_user, email, 'Cambiá tu contraseña', token, `<p>${token}</p>`);
+        SendMail(
+          envVarConfig.email_user,
+          email,
+          'Cambiá tu contraseña',
+          recoveryToken,
+          `<p>${recoveryToken}</p>`
+        );
       }
     } catch (error) {
       throw error;
     }
   }
 
-  public async saveAuxTokenToDB(token: string, type:string, user_id: number) {
+  // TODO: Eliminar recovery token de la DB al completar la query de udpate de password
+  public async recoverPassword(recoveryToken: string, newPassword: string) {
+    try {
+      const { user_id } = (await jwt.verify(
+        recoveryToken,
+        process.env.JWT_SECRET ?? ''
+      )) as JwtPayload;
+
+      const recoveryTokenInDB = await this.getAuxTokenByUserId('recoveryToken', user_id);
+
+      const tokenMatch = recoveryToken === recoveryTokenInDB;
+
+      if (tokenMatch) {
+        const hashedPass = await DataHash.hash(newPassword);
+
+        const query = `UPDATE "user" SET password = $1 WHERE id = $2`;
+        const values = [hashedPass, user_id];
+
+        await this.pool.query(query, values);
+      }
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  public async getAuxTokenByUserId(type: string, user_id: string) {
+    try {
+      const query = `SELECT "token" FROM "auxToken" WHERE type = $1 AND user_id = $2`;
+
+      const values = [type, user_id];
+
+      const { rows } = await this.pool.query(query, values);
+
+      return rows[0]?.token;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  public async saveAuxTokenToDB(token: string, type: string, user_id: number) {
     const query = `INSERT INTO "auxToken" (
       token,
       type,
       user_id
     ) VALUES ($1, $2, $3)`;
-  
+
     const values = [token, type, user_id];
-  
+
     await this.pool.query(query, values);
   }
 
@@ -144,7 +199,6 @@ class Auth {
 
     await this.pool.query(query, values);
   }
-
 }
 
 export default Auth;

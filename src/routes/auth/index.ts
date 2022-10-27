@@ -57,4 +57,17 @@ router.post('/password/recover', async (req, res, next) => {
   }
 });
 
+router.patch('/password/recover', async (req, res, next) => {
+  try {
+    const { new_password } = req.body;
+    const { recovery_token } = req.headers;
+    if (await Auth.recoverPassword(recovery_token, new_password)) {
+      res.status(200).send('¡Cambiaste tu contraseña con éxito!');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 export default router;
