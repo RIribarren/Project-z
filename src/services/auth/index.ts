@@ -137,7 +137,6 @@ class Auth {
     }
   }
 
-  // TODO: Eliminar recovery token de la DB al completar la query de udpate de password
   public async recoverPassword(recoveryToken: string, newPassword: string) {
     try {
       const { user_id } = (await jwt.verify(

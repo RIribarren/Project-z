@@ -22,6 +22,10 @@ CREATE SEQUENCE authToken_id_seq
 INCREMENT 1
 START 1;
 
+CREATE SEQUENCE auxToken_id_seq
+INCREMENT 1
+START 1;
+
 CREATE TABLE IF NOT EXISTS public."user"
 (
     id integer NOT NULL DEFAULT nextval('user_id_seq'),
@@ -101,6 +105,19 @@ CREATE TABLE IF NOT EXISTS public.user_team
     team_id integer NOT NULL,
     user_id integer NOT NULL,
     PRIMARY KEY (team_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS public."auxToken"
+(
+    id integer NOT NULL DEFAULT nextval('auxToken_id_seq'),
+    user_id integer NOT NULL,
+    token text COLLATE pg_catalog."default" NOT NULL,
+    type text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "auxToken_pkey" PRIMARY KEY (id),
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public."user" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 ALTER TABLE IF EXISTS public."voteSession"
