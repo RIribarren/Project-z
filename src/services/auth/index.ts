@@ -13,7 +13,7 @@ const REFRESH_TOKEN_EXPIRATION = '2m';
 const RECOVER_TOKEN_EXPIRATION = '30m';
 
 interface JwtPayload {
-  user_id: string;
+  user_id: number;
 }
 
 class Auth {
@@ -148,7 +148,6 @@ class Auth {
       const recoveryTokenInDB = await this.getAuxTokenByUserId('recoveryToken', user_id);
 
       const tokenMatch = recoveryToken === recoveryTokenInDB;
-
       if (tokenMatch) {
         const hashedPass = await DataHash.hash(newPassword);
 
@@ -156,16 +155,18 @@ class Auth {
         const values = [hashedPass, user_id];
 
         await this.pool.query(query, values);
+        this.deleteAuxTokenByUserId("recoveryToken",user_id)
+        return true;
+      }else{
+        throw {message:"El token ya fue utilizado"}
       }
-
-      return true;
     } catch (error) {
       console.error(error);
       throw error;
     }
   }
 
-  public async getAuxTokenByUserId(type: string, user_id: string) {
+  public async getAuxTokenByUserId(type: string, user_id: number) {
     try {
       const query = `SELECT "token" FROM "auxToken" WHERE type = $1 AND user_id = $2`;
 
@@ -198,6 +199,11 @@ class Auth {
     const values = [token, type, user_id];
 
     await this.pool.query(query, values);
+  }
+  public async deleteAuxTokenByUserId (type: string, user_id: number){
+    const query =`DELETE from "auxToken" WHERE type = $1 AND user_id = $2`
+    const values = [type,user_id]
+    await this.pool.query(query,values)
   }
 }
 
