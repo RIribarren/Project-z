@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c46548fc-add9-4257-9861-5f32adaed2c2",
+		"_postman_id": "e81015d5-a09f-4b6a-ba0d-8048f581316d",
 		"name": "zPlanning",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "14888079"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -114,7 +113,10 @@
 					"name": "refresh-token",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -313,6 +315,57 @@
 								"1"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "voteSession",
+			"item": [
+				{
+					"name": "create-vote-session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Vote session 1\",\n    \"description\": \"descripcion de la primer sesion de votos\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/voteSession",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"voteSession"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-vote-sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "get-vote-session-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
 					},
 					"response": []
 				}
