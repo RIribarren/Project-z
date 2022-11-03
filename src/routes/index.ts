@@ -1,12 +1,13 @@
+import passport from 'passport';
 import UserRouter from './users';
 import CardsRouter from './cards';
-import SessionVotingRouter from './sessionVoting';
+import voteSessionsRouter from './voteSessions';
 import AuthRouter from './auth';
 
 const RouterApp = (app: any) => {
   app.use('/users', UserRouter);
   app.use('/cards', CardsRouter);
-  app.use('/sessionVoting', SessionVotingRouter);
+  app.use('/voteSessions', voteSessionsRouter);
   app.use('/auth', AuthRouter);
 };
 
