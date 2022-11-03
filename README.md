@@ -39,6 +39,7 @@ En este proyecto vamos a poner en práctica las tecnologías y conceptos aprendi
 - Generar reportes estadísiticos basados en los criterios requeridos llegado el momento.
 - Cada cliente que entre en una sesión ya iniciada se actualice automaticamente el estado actual de la sesion (uso de redis con websockets).
 - Implementar algún servicio menor haciendo uso de GraphQL
+- TODO: definir el estado de una card (en proceso de votacion o votacion finalizada) que permita el proceso de revelar los votos por parte del facilitador. La votacion puede estar almacenada en redis mientras se esté llevando a cabo la votación y cuando finalice la guardamos en la base de datos.
 
 ## Features front-end:
 
