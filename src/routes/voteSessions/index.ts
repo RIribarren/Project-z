@@ -17,17 +17,17 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const user_id = req?.user?.user_id;
-    const { title, description,  } = req.body;
-    if (user_id) {
-      await createVoteSession(title, description, user_id);
+    const facilitator_id = req?.user?.user_id;
+    const { title, description } = req.body;
+    if (facilitator_id) {
+      await createVoteSession(title, description, facilitator_id);
     }
     res.json({
-      message: 'Card creada',
+      message: 'Sesión de votación creada',
       data: {
         title,
         description,
-        user_id
+        facilitator_id,
       },
     });
   } catch (error) {

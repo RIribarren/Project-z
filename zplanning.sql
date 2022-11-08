@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS public."authToken"
 CREATE TABLE IF NOT EXISTS public."voteSession"
 (
     id integer NOT NULL DEFAULT nextval('voteSession_id_seq'),
-    created_at date NOT NULL,
+    created_at date NOT NULL DEFAULT NOW(),
     title text NOT NULL,
     description text NOT NULL,
-    user_id integer,
+    facilitator_id integer,
     CONSTRAINT vote_session_id PRIMARY KEY (id)
 );
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS public."auxToken"
 );
 
 ALTER TABLE IF EXISTS public."voteSession"
-    ADD CONSTRAINT user_id_fkey FOREIGN KEY (user_id)
+    ADD CONSTRAINT facilitator_id_fkey FOREIGN KEY (facilitator_id)
     REFERENCES public."user" (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
