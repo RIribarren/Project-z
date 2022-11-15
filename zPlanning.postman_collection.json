@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "196f2c88-9bcc-4ad7-a79d-4b408e799515",
+		"_postman_id": "eaee0c85-0750-4b18-bf37-6a8d9e982118",
 		"name": "zPlanning",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18868181"
 	},
 	"item": [
 		{
@@ -22,17 +23,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users"
-							]
-						}
+						"url": "http://localhost:8080/users"
 					},
 					"response": []
 				},
@@ -41,17 +32,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users"
-							]
-						}
+						"url": "http://localhost:8080/users"
 					},
 					"response": []
 				},
@@ -60,18 +41,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/users/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/users/1"
 					},
 					"response": []
 				}
@@ -94,18 +64,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/auth/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
+						"url": "http://localhost:8080/auth/login"
 					},
 					"response": []
 				},
@@ -114,9 +73,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": ""
-						}
+						"url": ""
 					},
 					"response": []
 				},
@@ -134,19 +91,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/auth/password/recover",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"password",
-								"recover"
-							]
-						}
+						"url": "http://localhost:8080/auth/password/recover"
 					},
 					"response": []
 				},
@@ -155,19 +100,7 @@
 					"request": {
 						"method": "PATCH",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/auth/password/recover",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"password",
-								"recover"
-							]
-						}
+						"url": "http://localhost:8080/auth/password/recover"
 					},
 					"response": []
 				}
@@ -181,13 +114,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": ""
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -200,17 +129,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/cards",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"cards"
-							]
-						}
+						"url": "http://localhost:8080/cards"
 					},
 					"response": []
 				},
@@ -219,13 +138,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": ""
+							}
 						},
 						"method": "PATCH",
 						"header": [
@@ -244,18 +159,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/cards/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"cards",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/cards/1"
 					},
 					"response": []
 				},
@@ -264,17 +168,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/cards",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"cards"
-							]
-						}
+						"url": "http://localhost:8080/cards"
 					},
 					"response": []
 				},
@@ -283,18 +177,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/cards/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"cards",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/cards/1"
 					},
 					"response": []
 				},
@@ -303,18 +186,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/cards/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"cards",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/cards/1"
 					},
 					"response": []
 				}
@@ -328,13 +200,9 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -347,17 +215,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/voteSessions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"voteSessions"
-							]
-						}
+						"url": "http://localhost:8080/voteSessions"
 					},
 					"response": []
 				},
@@ -366,27 +224,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": ""
+							}
 						},
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/voteSessions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"voteSessions"
-							]
-						}
+						"url": "http://localhost:8080/voteSessions"
 					},
 					"response": []
 				},
@@ -395,28 +239,52 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "",
-									"type": "string"
-								}
-							]
+							"bearer": {
+								"token": ""
+							}
 						},
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/voteSessions/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"voteSessions",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/voteSessions/1"
+					},
+					"response": []
+				},
+				{
+					"name": "delete-vote-session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/voteSessions/1"
+					},
+					"response": []
+				},
+				{
+					"name": "update-vote-session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"descripcion de la primer sesion de votos mås actualizada2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/voteSessions/2"
 					},
 					"response": []
 				}
