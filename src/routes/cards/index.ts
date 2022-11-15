@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const response = await findCardById(id);
+    const response = await findCardById(Number(id));
     res.json(response);
   } catch (error) {
     next(error);
@@ -46,7 +46,7 @@ router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, link } = req.body;
-    await updateCard(id, title, link);
+    await updateCard(Number(id), title, link);
     res.json({
       message: 'Card actualizada',
     });
@@ -58,7 +58,7 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    await removeCard(id);
+    await removeCard(Number(id));
     res.json({
       message: 'Card borrada',
     });

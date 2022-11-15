@@ -1,6 +1,12 @@
 import express from 'express';
 import passport from 'passport';
-import { createVoteSession, findAllVoteSessions, findVoteSessionById } from '@services';
+import {
+  createVoteSession,
+  findAllVoteSessions,
+  findVoteSessionById,
+  removeVoteSession,
+  updateVoteSession,
+} from '@services';
 
 const router = express.Router();
 
@@ -40,6 +46,31 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
     const response = await findVoteSessionById(Number(id));
     res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await removeVoteSession(Number(id));
+    res.json({
+      message: 'Sesión de votos borrada',
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+    await updateVoteSession(Number(id), title, description);
+    res.json({
+      message: 'Vote session updated',
+    });
   } catch (error) {
     next(error);
   }

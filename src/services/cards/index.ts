@@ -14,7 +14,7 @@ export const findAllCards = async () => {
   }
 };
 
-export const findCardById = async (id: string) => {
+export const findCardById = async (id: number) => {
   try {
     const query = 'SELECT title, link FROM "card" WHERE id = $1';
     const values = [id];
@@ -44,9 +44,9 @@ export const createCard = async (title: string, link: string) => {
   }
 };
 
-export const updateCard = async (id: string, title?: string, link?: string) => {
+export const updateCard = async (id: number, title?: string, link?: string) => {
   try {
-    const values = [id];
+    const values: (string | number)[] = [id];
     if (title) values.push(title);
     if (link) values.push(link);
 
@@ -65,7 +65,7 @@ export const updateCard = async (id: string, title?: string, link?: string) => {
   }
 };
 
-export const removeCard = async (id: string) => {
+export const removeCard = async (id: number) => {
   try {
     const values = [id];
     const query = `DELETE FROM "card" WHERE id=$1`;

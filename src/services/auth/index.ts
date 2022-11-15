@@ -8,8 +8,8 @@ import { envVarConfig } from '@config';
 
 const Users = new UserService();
 
-const ACCESS_TOKEN_EXPIRATION = '1m';
-const REFRESH_TOKEN_EXPIRATION = '2m';
+const ACCESS_TOKEN_EXPIRATION = '1h';
+const REFRESH_TOKEN_EXPIRATION = '2h';
 const RECOVER_TOKEN_EXPIRATION = '30m';
 
 interface JwtPayload {
@@ -154,10 +154,10 @@ class Auth {
         const values = [hashedPass, user_id];
 
         await this.pool.query(query, values);
-        this.deleteAuxTokenByUserId("recoveryToken",user_id)
+        this.deleteAuxTokenByUserId('recoveryToken', user_id);
         return true;
-      }else{
-        throw {message:"El token ya fue utilizado"}
+      } else {
+        throw { message: 'El token ya fue utilizado' };
       }
     } catch (error) {
       console.error(error);
@@ -199,10 +199,10 @@ class Auth {
 
     await this.pool.query(query, values);
   }
-  public async deleteAuxTokenByUserId (type: string, user_id: number){
-    const query =`DELETE from "auxToken" WHERE type = $1 AND user_id = $2`
-    const values = [type,user_id]
-    await this.pool.query(query,values)
+  public async deleteAuxTokenByUserId(type: string, user_id: number) {
+    const query = `DELETE from "auxToken" WHERE type = $1 AND user_id = $2`;
+    const values = [type, user_id];
+    await this.pool.query(query, values);
   }
 }
 

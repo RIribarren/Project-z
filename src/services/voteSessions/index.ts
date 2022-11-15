@@ -1,6 +1,7 @@
 import { postgresPool } from '@libs';
 import Boom from '@hapi/boom';
 import { Pool } from 'pg';
+import { query } from 'express';
 
 const pool: Pool = postgresPool;
 
@@ -49,4 +50,41 @@ export const findVoteSessionById = async (id: number) => {
   }
 };
 
-//TODO: crear funcion para borrar y editar una vote session
+export const updateVoteSession = async (id: number, title?: string, description?: string) => {
+  try {
+    const values: (string | number)[] = [id];
+    if (title) values.push(title);
+    if (description) values.push(description);
+
+    if (title || description) {
+      // Find a more readable alternative to this approach
+      const query = `UPDATE "voteSession" SET ${title ? 'title = $2' : ''}${
+        title && description ? ', description = $3' : description ? ' description = $2' : ''
+      } WHERE id=$1`;
+      const { rowCount } = await pool.query(query, values);
+      if (rowCount === 0) {
+        throw Boom.notFound('Vote session not found!');
+      }
+    } else {
+      throw Boom.badRequest('missing fields');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const removeVoteSession = async (id: number) => {
+  try {
+    const values = [id];
+    const query = `DELETE FROM "voteSession" WHERE id=$1`;
+    const { rowCount } = await pool.query(query, values);
+    if (rowCount === 0) {
+      throw Boom.notFound('Vote session not found!');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+//TODO: agregar servicio para modificar facilitator_id.
+// hacer deploy a flyctl
