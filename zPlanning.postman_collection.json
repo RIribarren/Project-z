@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "eaee0c85-0750-4b18-bf37-6a8d9e982118",
+		"_postman_id": "df12f500-c52a-4767-be07-14a7534ff1b2",
 		"name": "zPlanning",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "18868181"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17815949"
 	},
 	"item": [
 		{
@@ -23,7 +23,15 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/users"
+						"url": {
+							"raw": "{{URL_BASE}}/users",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -32,7 +40,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users"
+						"url": {
+							"raw": "{{URL_BASE}}/users",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				},
@@ -41,7 +57,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/1"
+						"url": {
+							"raw": "{{URL_BASE}}/users/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -52,6 +77,20 @@
 			"item": [
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"console.log(res)",
+									"pm.environment.set('ACCESS_TOKEN', res.accessToken);",
+									"pm.environment.set('REFRESH_TOKEN', res.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -64,7 +103,16 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/auth/login"
+						"url": {
+							"raw": "{{URL_BASE}}/auth/login",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				},
@@ -73,7 +121,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -91,7 +141,17 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/auth/password/recover"
+						"url": {
+							"raw": "{{URL_BASE}}/auth/password/recover",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"auth",
+								"password",
+								"recover"
+							]
+						}
 					},
 					"response": []
 				},
@@ -100,7 +160,17 @@
 					"request": {
 						"method": "PATCH",
 						"header": [],
-						"url": "http://localhost:8080/auth/password/recover"
+						"url": {
+							"raw": "{{URL_BASE}}/auth/password/recover",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"auth",
+								"password",
+								"recover"
+							]
+						}
 					},
 					"response": []
 				}
@@ -114,9 +184,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": ""
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -129,7 +203,17 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/cards"
+						"url": {
+							"raw": "http://localhost:8080/cards",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cards"
+							]
+						}
 					},
 					"response": []
 				},
@@ -138,9 +222,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": ""
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
 						},
 						"method": "PATCH",
 						"header": [
@@ -159,16 +247,43 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/cards/1"
+						"url": {
+							"raw": "{{URL_BASE}}/cards/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"cards",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "get-cards",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/cards"
+						"url": {
+							"raw": "{{URL_BASE}}/cards",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"cards"
+							]
+						}
 					},
 					"response": []
 				},
@@ -177,7 +292,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/cards/1"
+						"url": {
+							"raw": "{{URL_BASE}}/cards/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"cards",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -186,7 +310,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/cards/1"
+						"url": {
+							"raw": "{{URL_BASE}}/cards/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"cards",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -200,9 +333,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg3MTY5MjEsImV4cCI6MTY2ODcyMDUyMX0.r1qyq6i3n8M7-OKC8JUGOIeOSPOjolBAgX28x7GcZ7Q",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -215,7 +352,15 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/voteSessions"
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions"
+							]
+						}
 					},
 					"response": []
 				},
@@ -224,13 +369,25 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": ""
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/voteSessions"
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions"
+							]
+						}
 					},
 					"response": []
 				},
@@ -239,13 +396,26 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": ""
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/voteSessions/1"
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -254,13 +424,26 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I",
+									"type": "string"
+								}
+							]
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/voteSessions/1"
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -269,9 +452,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I",
+									"type": "string"
+								}
+							]
 						},
 						"method": "PATCH",
 						"header": [],
@@ -284,7 +471,46 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/voteSessions/2"
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions/2",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-facilitator-by-vote-session",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg3MTY5MjEsImV4cCI6MTY2ODcyMDUyMX0.r1qyq6i3n8M7-OKC8JUGOIeOSPOjolBAgX28x7GcZ7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}/voteSessions/1/facilitator/10",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"voteSessions",
+								"1",
+								"facilitator",
+								"10"
+							]
+						}
 					},
 					"response": []
 				}
