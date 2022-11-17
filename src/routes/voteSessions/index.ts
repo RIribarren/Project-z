@@ -6,6 +6,7 @@ import {
   findVoteSessionById,
   removeVoteSession,
   updateVoteSession,
+  updateFacilitatorByVoteSession
 } from '@services';
 
 const router = express.Router();
@@ -70,6 +71,18 @@ router.patch('/:id', async (req, res, next) => {
     await updateVoteSession(Number(id), title, description);
     res.json({
       message: 'Vote session updated',
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/:id/facilitator/:facilitator_id', async (req, res, next) => {
+  try {
+    const { id, facilitator_id } = req.params;
+    await updateFacilitatorByVoteSession(Number(id), Number(facilitator_id));
+    res.json({
+      message: 'Facilitator updated',
     });
   } catch (error) {
     next(error);

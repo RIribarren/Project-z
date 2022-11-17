@@ -10,6 +10,7 @@ class User {
     this.pool = postgresPool;
   }
 
+  //TODO: cambiar id a number
   public async findById(id: string) {
     try {
       const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
@@ -87,8 +88,10 @@ class User {
     }
   }
 
+  //TODO:
   public updateUser() {}
 
+  //TODO:
   public deleteUser() {}
 }
 

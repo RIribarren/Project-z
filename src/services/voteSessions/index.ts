@@ -2,8 +2,11 @@ import { postgresPool } from '@libs';
 import Boom from '@hapi/boom';
 import { Pool } from 'pg';
 import { query } from 'express';
+import UserService from '../users/index';
 
 const pool: Pool = postgresPool;
+
+const user = new UserService();
 
 export const findAllVoteSessions = async () => {
   try {
@@ -86,5 +89,19 @@ export const removeVoteSession = async (id: number) => {
   }
 };
 
-//TODO: agregar servicio para modificar facilitator_id.
-// hacer deploy a flyctl
+export const updateFacilitatorByVoteSession = async (id: number, facilitator_id: number) => {
+  try {
+    const values = [id, facilitator_id];
+    const facilitator = await user.findById(facilitator_id.toString());
+    if (!facilitator) {
+      throw Boom.notFound('facilitator not found!');
+    }
+    const query = `UPDATE "voteSession" SET facilitator_id=$2 WHERE id=$1`;
+    const { rowCount } = await pool.query(query, values);
+    if (rowCount === 0) {
+      throw Boom.notFound('Vote session not found!');
+    }
+  } catch (error) {
+    throw error;
+  }
+};
