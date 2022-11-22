@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "df12f500-c52a-4767-be07-14a7534ff1b2",
+		"_postman_id": "8e535ea1-d771-421d-b8e8-ebaa6691b057",
 		"name": "zPlanning",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17815949"
+		"_exporter_id": "15162313"
 	},
 	"item": [
 		{
@@ -12,6 +12,16 @@
 				{
 					"name": "create-user",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -38,6 +48,16 @@
 				{
 					"name": "get-users",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -55,6 +75,16 @@
 				{
 					"name": "get-user-by-id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -118,11 +148,51 @@
 				},
 				{
 					"name": "refresh-token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"console.log(res)",
+									"pm.environment.set('ACCESS_TOKEN', res.accessToken);",
+									"pm.environment.set('REFRESH_TOKEN', res.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh_token\": \"{{REFRESH_TOKEN}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "{{URL_BASE}}/auth/refresh-token",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
 						}
 					},
 					"response": []
@@ -158,6 +228,16 @@
 				{
 					"name": "password-recover",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
@@ -187,7 +267,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -204,12 +284,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/cards",
-							"protocol": "http",
+							"raw": "{{URL_BASE}}/cards",
 							"host": [
-								"localhost"
+								"{{URL_BASE}}"
 							],
-							"port": "8080",
 							"path": [
 								"cards"
 							]
@@ -225,7 +303,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -290,6 +368,16 @@
 				{
 					"name": "get-card-by-id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -308,6 +396,16 @@
 				{
 					"name": "delete-card-by-id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -336,7 +434,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg3MTY5MjEsImV4cCI6MTY2ODcyMDUyMX0.r1qyq6i3n8M7-OKC8JUGOIeOSPOjolBAgX28x7GcZ7Q",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -399,7 +497,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -427,7 +525,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -455,7 +553,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg1NDQ0MTgsImV4cCI6MTY2ODU0ODAxOH0.sF4JZ9XbK8qHjqJlVTw_oqhKLF1FryXlD8VnJaSna6I",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -492,7 +590,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2Njg3MTY5MjEsImV4cCI6MTY2ODcyMDUyMX0.r1qyq6i3n8M7-OKC8JUGOIeOSPOjolBAgX28x7GcZ7Q",
+									"value": "{{ACCESS_TOKEN}}",
 									"type": "string"
 								}
 							]
@@ -500,7 +598,7 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{URL_BASE}}/voteSessions/1/facilitator/10",
+							"raw": "{{URL_BASE}}/voteSessions/1/facilitator/1",
 							"host": [
 								"{{URL_BASE}}"
 							],
@@ -508,7 +606,7 @@
 								"voteSessions",
 								"1",
 								"facilitator",
-								"10"
+								"1"
 							]
 						}
 					},
