@@ -4,6 +4,8 @@ import { errorLogger, boomErrorHandler, genericErrorHandler } from '@middlewares
 import { activatePassportStrategies } from '@helpers';
 import {createServer} from "http"
 import { Server,Socket } from "socket.io";
+import cors from 'cors';
+
 const app = express();
 const server = createServer(app)
 export const ioServ = new Server(server,{
@@ -17,6 +19,7 @@ ioServ.on("connection", (socket: Socket) => {
   //socket.broadcast.emit("beResponse",`Recibi ${data}`)})
 });
 const port = 8080;
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 activatePassportStrategies();
