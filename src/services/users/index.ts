@@ -11,6 +11,7 @@ class User {
   }
 
   //TODO: cambiar id a number
+  //TODO: Add user id to the responses
   public async findById(id: string) {
     try {
       const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
