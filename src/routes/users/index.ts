@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const user = await Users.findById(req.params.id);
+    const user = await Users.findById(Number(req.params.id));
     res.json(user);
   } catch (error) {
     next(error);

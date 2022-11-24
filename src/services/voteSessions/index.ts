@@ -92,7 +92,7 @@ export const removeVoteSession = async (id: number) => {
 export const updateFacilitatorByVoteSession = async (id: number, facilitator_id: number) => {
   try {
     const values = [id, facilitator_id];
-    const facilitator = await user.findById(facilitator_id.toString());
+    const facilitator = await user.findById(facilitator_id);
     if (!facilitator) {
       throw Boom.notFound('facilitator not found!');
     }
