@@ -77,9 +77,10 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
-router.patch('/:id/facilitator/:facilitator_id', async (req, res, next) => {
+router.patch('/:id/take-facilitator-role', async (req, res, next) => {
   try {
-    const { id, facilitator_id } = req.params;
+    const { id,  } = req.params;
+    const facilitator_id = req?.user?.user_id;
     await updateFacilitatorByVoteSession(Number(id), Number(facilitator_id));
     res.json({
       message: 'Facilitator updated',
