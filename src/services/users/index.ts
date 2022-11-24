@@ -49,6 +49,7 @@ class User {
     }
   }
 
+  //TODO: agregar confirmacion de mail
   public async createUser(
     first_name: string,
     last_name: string,
@@ -90,7 +91,6 @@ class User {
   //TODO:
   public updateUser() {}
 
-  //TODO:
   public async disableUser(id: number) {
     try {
       const values = [id];
