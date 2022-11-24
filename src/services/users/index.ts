@@ -10,9 +10,7 @@ class User {
     this.pool = postgresPool;
   }
 
-  //TODO: cambiar id a number
-  //TODO: Add user id to the responses
-  public async findById(id: string) {
+  public async findById(id: number) {
     try {
       const query = 'SELECT first_name, last_name, email, role FROM "user" WHERE id = $1';
       const values = [id];
@@ -43,7 +41,7 @@ class User {
 
   public async findAll() {
     try {
-      const query = 'SELECT first_name, last_name, email, role FROM "user"';
+      const query = 'SELECT first_name, last_name, email, role, id FROM "user"';
       const result = await this.pool.query(query);
       return result.rows;
     } catch (error) {
