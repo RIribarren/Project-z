@@ -91,7 +91,18 @@ class User {
   public updateUser() {}
 
   //TODO:
-  public deleteUser() {}
+  public async disableUser(id: number) {
+    try {
+      const values = [id];
+      const query = `UPDATE "user" SET active = false WHERE id=$1 AND active=true`;
+      const { rowCount } = await this.pool.query(query, values);
+      if (rowCount === 0) {
+        throw Boom.notFound('User not found!');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default User;

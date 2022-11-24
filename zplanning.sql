@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS public."user"
     email text NOT NULL,
     password text NOT NULL,
     role text NOT NULL,
+    active boolean NOT NULL DEFAULT true,
     PRIMARY KEY (id)
 );
 

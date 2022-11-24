@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "8e535ea1-d771-421d-b8e8-ebaa6691b057",
+		"_postman_id": "8b65d100-d324-48de-95ba-070339a1d0b2",
 		"name": "zPlanning",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15162313"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -95,6 +94,34 @@
 							"path": [
 								"users",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}/users/3",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"users",
+								"3"
 							]
 						}
 					},
@@ -583,7 +610,7 @@
 					"response": []
 				},
 				{
-					"name": "update-facilitator-by-vote-session",
+					"name": "take-facilitator-by-vote-session",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -598,15 +625,14 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{URL_BASE}}/voteSessions/1/facilitator/1",
+							"raw": "{{URL_BASE}}/voteSessions/2/take-facilitator-role",
 							"host": [
 								"{{URL_BASE}}"
 							],
 							"path": [
 								"voteSessions",
-								"1",
-								"facilitator",
-								"1"
+								"2",
+								"take-facilitator-role"
 							]
 						}
 					},

@@ -36,4 +36,13 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Users.disableUser(Number(req.params.id));
+    res.json({ message: 'Usuario eliminado'});
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
