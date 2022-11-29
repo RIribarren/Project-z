@@ -1,7 +1,10 @@
 import { postgresPool } from '@libs';
 import Boom from '@hapi/boom';
 import { Pool } from 'pg';
-import { DataHash } from '@helpers';
+import { DataHash, sendMail, signJWT } from '@helpers';
+import { envVarConfig } from '@config';
+
+const CONFIRMATION_TOKEN_EXPIRATION = '30m';
 
 class User {
   pool: Pool;
@@ -49,7 +52,10 @@ class User {
     }
   }
 
-  //TODO: agregar confirmacion de mail
+  // TODO: continuar confirmacion de mail. Crear el endpoint para recibir el token enviado y confirmar el email.
+  // Agregar la validación en algunas features para impedir a un usuario no validado usarlas, dándole un acceso parcial a la app hasta que se valide.
+  // Agregar un endpoint que permita reenviar el mail de validación.
+  // Handlear errores
   public async createUser(
     first_name: string,
     last_name: string,
@@ -81,11 +87,40 @@ class User {
         email,
         password,
         role
-      ) VALUES ($1, $2, $3, $4, $5)`;
-      await this.pool.query(query, values);
+      ) VALUES ($1, $2, $3, $4, $5)
+      RETURNING id`;
+      const {
+        rows: [{ id }],
+      } = await this.pool.query(query, values);
+      const emailConfirmationToken = signJWT({ id }, CONFIRMATION_TOKEN_EXPIRATION);
+      this.saveAuxTokenToDB(emailConfirmationToken, 'emailConfirmationToken', id);
+      sendMail(
+        envVarConfig.email_user,
+        email,
+        'Completá tu registro',
+        emailConfirmationToken,
+        `<p>${emailConfirmationToken}</p>`
+      );
     } catch (error) {
       throw error;
     }
+  }
+
+  /* TODO:
+   * - Reemplazar el uso de clases por programación funcional
+   * - Si eso resuelve el problema de la dependencia circular, esa función puede borrarse y tomarse de Auth.
+   * - Si eso no resuelve el problema, se deben llevar las funciones relacionadas a auxTokens a un nuevo servicio.
+   */
+  public async saveAuxTokenToDB(token: string, type: string, user_id: number) {
+    const query = `INSERT INTO "auxToken" (
+      token,
+      type,
+      user_id
+    ) VALUES ($1, $2, $3)`;
+
+    const values = [token, type, user_id];
+
+    await this.pool.query(query, values);
   }
 
   //TODO:
