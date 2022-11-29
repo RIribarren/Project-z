@@ -20,7 +20,7 @@
     "postgreSQL",
     "redis"
   ],
-  "author": "Alan Díaz, Francisco Zapiola, Delfina Fenocchio, Lisbaldy de Jesús, Matias Autalan, Rodolfo Iribarren",
+  "author": "Alan Díaz, Delfina Fenocchio, Francisco Zapiola, Gonzalo De Domingo, Lisbaldy de Jesús, Lucas Cazas Telias, Matias Autalan, Pedro Calogero, Rodolfo Iribarren",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/RIribarren/Project-z/issues"
