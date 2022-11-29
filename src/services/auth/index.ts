@@ -3,7 +3,7 @@ import { Pool } from 'pg';
 import jwt from 'jsonwebtoken';
 import Boom from '@hapi/boom';
 import UserService from '../users';
-import { DataHash, SendMail } from '@helpers';
+import { DataHash, sendMail, signJWT } from '@helpers';
 import { envVarConfig } from '@config';
 
 const Users = new UserService();
@@ -33,8 +33,8 @@ class Auth {
     }
     const { password, ...response } = user;
 
-    const accessToken = this.signJWT({ user_id: user.id }, ACCESS_TOKEN_EXPIRATION);
-    const refreshToken = this.signJWT({ user_id: user.id }, REFRESH_TOKEN_EXPIRATION);
+    const accessToken = signJWT({ user_id: user.id }, ACCESS_TOKEN_EXPIRATION);
+    const refreshToken = signJWT({ user_id: user.id }, REFRESH_TOKEN_EXPIRATION);
 
     if (await this.checkAuthTokenByUserId(user.id)) {
       await this.updateAuthTokenByUserId(accessToken, refreshToken, user.id);
@@ -47,13 +47,6 @@ class Auth {
       accessToken,
       refreshToken,
     };
-  }
-
-  public signJWT(payload: object, expiresIn: string | number) {
-    var token = jwt.sign(payload, process.env.JWT_SECRET ?? '', {
-      expiresIn,
-    });
-    return token;
   }
 
   public async saveAuthTokenToDB(access_token: string, refresh_token: string, user_id: number) {
@@ -105,8 +98,8 @@ class Auth {
     if (Boolean(result.rows.length)) {
       const item = result.rows[0];
       if (item.refresh_token === refresh_token) {
-        const accessToken = this.signJWT({ user_id }, ACCESS_TOKEN_EXPIRATION);
-        const refreshToken = this.signJWT({ user_id }, REFRESH_TOKEN_EXPIRATION);
+        const accessToken = signJWT({ user_id }, ACCESS_TOKEN_EXPIRATION);
+        const refreshToken = signJWT({ user_id }, REFRESH_TOKEN_EXPIRATION);
         await this.updateAuthTokenByUserId(accessToken, refreshToken, user_id);
         return { accessToken, refreshToken };
       }
@@ -117,14 +110,14 @@ class Auth {
   public async requestPasswordRecovery(email: string) {
     try {
       const user = await Users.findByEmail(email);
-      const recoveryToken = this.signJWT({ user_id: user.id }, RECOVER_TOKEN_EXPIRATION);
+      const recoveryToken = signJWT({ user_id: user.id }, RECOVER_TOKEN_EXPIRATION);
       if (await this.checkAuxTokenByUserId(user.id, 'recoveryToken')) {
         await this.updateAuxTokenByUserId(recoveryToken, 'recoveryToken', user.id);
       } else {
         await this.saveAuxTokenToDB(recoveryToken, 'recoveryToken', user.id);
       }
       if (user) {
-        SendMail(
+        sendMail(
           envVarConfig.email_user,
           email,
           'Cambiá tu contraseña',

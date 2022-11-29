@@ -1,6 +1,6 @@
 import { transporterConfig } from '@config';
 
-const SendMail = async (from: string, to: string, subject: string, text: string, html: string) => {
+const sendMail = async (from: string, to: string, subject: string, text: string, html: string) => {
   await transporterConfig.sendMail({
     from,
     to,
@@ -10,4 +10,4 @@ const SendMail = async (from: string, to: string, subject: string, text: string,
   });
 };
 
-export default SendMail;
+export default sendMail;
